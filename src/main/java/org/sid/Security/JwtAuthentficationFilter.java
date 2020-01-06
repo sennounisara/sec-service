@@ -50,8 +50,8 @@ public class JwtAuthentficationFilter extends UsernamePasswordAuthenticationFilt
                 .withIssuer(request.getRequestURI())
                 .withSubject(user.getName())
                 .withArrayClaim("roles",roles.toArray(new String[roles.size()]))
-                .withExpiresAt(new Date(System.currentTimeMillis()+10*24*3600))
-                .sign(Algorithm.HMAC256("sara@sennouni.com"));
-        response.addHeader("Authorization",jwt);
+                .withExpiresAt(new Date(System.currentTimeMillis()+SycurityParams.EXPIRATION))
+                .sign(Algorithm.HMAC256(SycurityParams.SECRET));
+        response.addHeader(SycurityParams.JWT_HEADER_NAME,jwt);
     }
 }
